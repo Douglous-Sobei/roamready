@@ -36,7 +36,13 @@ exports.getTour = catchAsync(async (req, res, next) => {
 });
 
 exports.getLoginForm = (req, res) => {
-  res.status(200).render('login', {
-    title: 'Log into your account',
-  });
+  res
+    .status(200)
+    .set(
+      'Content-Security-Policy',
+      "default-src 'self' https:; font-src 'self' https: data:; img-src 'self' data:; style-src 'self' https: 'unsafe-inline'; script-src 'self' https: 'unsafe-inline';",
+    )
+    .render('login', {
+      title: 'Log into your account',
+    });
 };
