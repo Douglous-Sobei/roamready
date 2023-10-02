@@ -6651,7 +6651,7 @@ var displayMap = exports.displayMap = function displayMap(locations) {
   mapboxgl.accessToken = 'pk.eyJ1IjoiZG91Z2xvdXMtc29iZWkiLCJhIjoiY2xtejMxdTlqMGs0MDJxbno5ZW1iaWIzbCJ9.5CCjoaJ7RxnKWdL2S0qMWg';
   var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/douglous-sobei/clmz8fh8l02v701pb8bkpbjae',
+    style: 'mapbox://styles/douglous-sobei/cln3pkzwo003801p9fl709ipb',
     scrollZoom: false
     // center: [-118.113491, 34.111745],
     // zoom: 10,
@@ -12370,7 +12370,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37305" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33109" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
