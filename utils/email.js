@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 const pug = require('pug');
-const htmlToText = require('html-to-text');
+const cheerio = require('cheerio');
 
 module.exports = class Email {
   constructor(user, url) {
@@ -10,10 +10,9 @@ module.exports = class Email {
     this.from = `Douglous Sobei <${process.env.EMAIL_FROM}>`;
   }
 
-  createTransport() {
+  newTransport() {
     if (process.env.NODE_ENV === 'production') {
-      // sendgrid
-      return 1;
+      // Set up production email service (e.g., Sendgrid)
     }
 
     return nodemailer.createTransport({
@@ -26,7 +25,7 @@ module.exports = class Email {
     });
   }
 
-  // Send actual email
+  // Send the actual email
   async send(template, subject) {
     // 1) Render HTML based on a pug template
     const html = pug.renderFile(
@@ -37,20 +36,25 @@ module.exports = class Email {
         subject,
       },
     );
-    // 2) Define email options
-    const mailoptions = {
+
+    // 2) Use cheerio to parse the HTML and get text content
+    const $ = cheerio.load(html);
+    const text = $('body').text(); // Corrected this line
+
+    // 3) Define email options
+    const mailOptions = {
       from: this.from,
       to: this.to,
       subject,
       html,
-      text: htmlToText.fromString(html),
+      text,
     };
 
-    // 3) Create a transport and sendemail
-    await this.newTransporter().sendMail(mailoptions);
+    // 4) Create a transport and send email
+    await this.newTransport().sendMail(mailOptions);
   }
 
   async sendWelcome() {
-    await this.send('welcome', 'Welcome to the Natours family.');
+    await this.send('welcome', 'Welcome to the Natours Family!');
   }
 };
