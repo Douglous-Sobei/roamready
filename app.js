@@ -97,14 +97,14 @@ app.use((req, res, next) => {
 });
 
 // Allow all resources
-// app.use((req, res, next) => {
-//   res.setHeader(
-//     'Content-Security-Policy',
-//     "script-src 'self' https://cdnjs.cloudflare.com https://api.mapbox.com https://js.stripe.com 'unsafe-inline'; worker-src 'self' blob:;",
-//   );
+app.use((req, res, next) => {
+  res.setHeader(
+    'Content-Security-Policy',
+    "script-src 'self' https://cdnjs.cloudflare.com https://api.mapbox.com https://js.stripe.com 'unsafe-inline'; worker-src 'self' blob:;",
+  );
 
-//   next();
-// });
+  next();
+});
 
 // ROUTES
 app.use('/', viewRouter);
