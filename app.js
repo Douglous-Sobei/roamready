@@ -73,6 +73,16 @@ app.use((req, res, next) => {
   next();
 });
 
+// Allow all resources
+app.use((req, res, next) => {
+  res.setHeader(
+    'Content-Security-Policy',
+    "script-src 'self' https://cdnjs.cloudflare.com https://api.mapbox.com https://js.stripe.com 'unsafe-inline'; worker-src 'self' blob:;",
+  );
+
+  next();
+});
+
 // 3) ROUTES
 app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
