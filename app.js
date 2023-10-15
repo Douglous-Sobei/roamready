@@ -1,6 +1,5 @@
 const path = require('path');
 const express = require('express');
-const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
@@ -22,17 +21,8 @@ const app = express();
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
-// 1) GLOBAL MIDDLEWARES
-// Serving static files
-app.use(express.static(path.join(__dirname, 'public')));
-
 // Set security HTTP headers
 app.use(helmet());
-
-// Development logging
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
-}
 
 // Limit requests from same API
 const limiter = rateLimit({
@@ -69,13 +59,6 @@ app.use(
 
 app.use(compression());
 
-// Test middleware
-app.use((req, res, next) => {
-  req.requestTime = new Date().toISOString();
-  // console.log(req.cookies);
-  next();
-});
-
 // Allow all resources
 app.use((req, res, next) => {
   res.setHeader(
@@ -86,7 +69,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// 3) ROUTES
+// ROUTES
 app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
